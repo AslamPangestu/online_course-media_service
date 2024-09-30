@@ -10,6 +10,9 @@ COPY package*.json ./
 # Install dependencies using Yarn
 RUN yarn install --production
 
+# Install Typescript to compile
+RUN yarn global add typescript 
+
 # Compile app to js
 RUN yarn build
 
