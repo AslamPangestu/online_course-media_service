@@ -7,6 +7,9 @@ RUN apk add --no-cache yarn
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
+# Copy tsconfig.json
+COPY tsconfig.json ./
+
 # Install dependencies using Yarn
 RUN yarn install --production
 
