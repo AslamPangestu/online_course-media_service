@@ -27,3 +27,5 @@ WORKDIR /app
 
 # Replace "index.js" with your app's entry point
 CMD ["pm2", "start", "index.js"]
+
+EXPOSE 8000
