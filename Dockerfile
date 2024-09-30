@@ -26,4 +26,4 @@ COPY --from=builder /build /app
 WORKDIR /app
 
 # Replace "index.js" with your app's entry point
-CMD ["pm2", "start", "index.js", "--port 10000"]
+CMD ["pm2", "start", "index.js"]
