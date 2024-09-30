@@ -4,15 +4,11 @@ FROM node:20.17.0-alpine3.20 AS builder
 # Install Yarn
 RUN apk add --no-cache yarn
 
-WORKDIR /app
-
+# Copy All
 COPY . .
 
 # Install dependencies using Yarn
-RUN yarn install --production
-
-# Install Typescript to compile
-RUN yarn global add typescript 
+RUN yarn install
 
 # Compile app to js
 RUN yarn build
