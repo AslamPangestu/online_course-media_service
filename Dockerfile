@@ -4,11 +4,9 @@ FROM node:20.17.0-alpine3.20 AS builder
 # Install Yarn
 RUN apk add --no-cache yarn
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+WORKDIR /app
 
-# Copy tsconfig.json
-COPY tsconfig.json ./
+COPY . .
 
 # Install dependencies using Yarn
 RUN yarn install --production
