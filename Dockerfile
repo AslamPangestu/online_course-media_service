@@ -21,7 +21,7 @@ COPY . .
 FROM keymetrics/pm2:latest
 
 # Copy your application code from the builder stage
-COPY --from=builder /app/build /app
+COPY --from=builder /build /app
 
 # Replace "index.js" with your app's entry point
 CMD ["pm2", "start", "index.js"]
