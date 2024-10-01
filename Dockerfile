@@ -18,9 +18,7 @@ RUN yarn build
 FROM keymetrics/pm2:latest
 
 # Copy your application code from the builder stage
-COPY --from=builder . /app
-
-WORKDIR /app
+COPY --from=builder . .
 
 # Replace "index.js" with your app's entry point
 CMD ["pm2-runtime", "build/index.js"]
