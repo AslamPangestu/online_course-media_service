@@ -22,6 +22,7 @@ FROM keymetrics/pm2:latest
 
 # Copy your application code from the builder stage
 COPY --from=builder /build /app
+COPY --from=builder /node_modules /app
 
 WORKDIR /app
 
