@@ -4,6 +4,9 @@ FROM node:20.17.0-alpine3.20 AS builder
 # Install Yarn
 RUN apk add --no-cache yarn
 
+# Copy All
+COPY . .
+
 # Install dependencies using Yarn
 RUN yarn install
 
@@ -20,6 +23,6 @@ COPY --from=builder . /app
 WORKDIR /app
 
 # Replace "index.js" with your app's entry point
-CMD ["pm2-runtime", "start"]
+CMD ["pm2-runtime", "start", "build/index.js"]
 
 EXPOSE 8000
