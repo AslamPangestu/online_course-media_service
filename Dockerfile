@@ -18,4 +18,4 @@ RUN yarn global add pm2
 # Replace "index.js" with your app's entry point
 CMD ["pm2-runtime", "start", "pm2.json"]
 
-EXPOSE 8000
+EXPOSE 10000
