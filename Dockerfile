@@ -26,6 +26,6 @@ COPY --from=builder /build /app
 WORKDIR /app
 
 # Replace "index.js" with your app's entry point
-CMD ["pm2", "start", "index.js"]
+CMD ["pm2-runtime", "start", "index.js"]
 
 EXPOSE 8000
