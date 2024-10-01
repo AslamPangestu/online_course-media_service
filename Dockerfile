@@ -13,9 +13,16 @@ RUN yarn install
 # Compile app to js
 RUN yarn build
 
-RUN yarn global add pm2 
+# Runtime stage
+# Start your application with PM2
+FROM keymetrics/pm2:latest
+
+# Copy your application code from the builder stage
+COPY --from=builder . /app
+
+WORKDIR /app
 
 # Replace "index.js" with your app's entry point
-CMD ["pm2-runtime", "build/index.js"]
+CMD ["pm2-runtime", "start"]
 
 EXPOSE 8000
