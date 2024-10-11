@@ -1,29 +1,27 @@
 import fastify from "fastify";
-import 'module-alias/register';
-import "reflect-metadata"
+import staticPlugin from "@fastify/static";
+import multipartPlugin from "@fastify/multipart";
+import path from "path";
+import "module-alias/register";
+import "reflect-metadata";
 
-import database from 'plugins/database'
-import Media from "models/media";
+import type { FastifyInstance } from "fastify";
 
-const server = fastify();
+import database from "plugins/database";
+import routes from "routes";
 
-server.register(database)
+const server: FastifyInstance = fastify();
 
-server.get("/ping", async (request, reply) => {
+server.register(multipartPlugin);
+server.register(staticPlugin, {
+  root: path.join(__dirname, "../storage"),
+  prefix: "/public/",
+});
+server.register(database);
+server.register(routes);
+
+server.get("/ping", async () => {
   return "pong-pong\n";
-});
-
-server.get("/insert", async (request, reply) => {
-  const data = new Media()
-  data.imagePath="Hai"
-
-  await server.repo.media.save(data)
-  return "success\n";
-});
-
-server.get("/get", async (request, reply) => {
-  const savedPhotos = await server.repo.media.find()
-  return savedPhotos;
 });
 
 server.listen(
@@ -34,5 +32,5 @@ server.listen(
       process.exit(1);
     }
     console.log(`Server listening at ${address}`);
-  },
+  }
 );
