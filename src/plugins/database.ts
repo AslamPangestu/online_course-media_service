@@ -1,6 +1,5 @@
 import fp from 'fastify-plugin'
 import { FastifyPluginAsync } from 'fastify'
-// import "reflect-metadata"
 import { DataSource, Repository } from "typeorm"
 
 import Media from 'models/media'
@@ -10,13 +9,13 @@ import Media from 'models/media'
 declare module 'fastify' {
   interface FastifyInstance {
     db: DataSource
-    repo:{
+    repo: {
       media: Repository<Media>
     }
   }
 }
 
-const databasePlugin: FastifyPluginAsync = fp(async (server, options) => {
+const DatabasePlugin: FastifyPluginAsync = fp(async (server, options) => {
   const AppDataSource = new DataSource({
     type: "postgres",
     username: process.env.DB_USERNAME,
@@ -27,6 +26,7 @@ const databasePlugin: FastifyPluginAsync = fp(async (server, options) => {
     entities: [Media],
     ssl: true,
     logging: false,
+    synchronize: false
   })
 
   try {
@@ -48,4 +48,4 @@ const databasePlugin: FastifyPluginAsync = fp(async (server, options) => {
   }
 })
 
-export default databasePlugin
+export default DatabasePlugin

@@ -8,6 +8,8 @@ export default class Media {
     @Column("varchar", { name: "image_path", length: 255 })
     imagePath!: string
 
+    @Column("varchar", { name: "filename", length: 255 })
+    filename!: string
 
     @Column("timestamptz", { name: "created_at", default: 'now()' })
     createdAt!: string

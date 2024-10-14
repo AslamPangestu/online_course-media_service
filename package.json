@@ -8,12 +8,14 @@
   "scripts": {
     "build": "rm -rf build && tsc -p tsconfig.json",
     "build:dev": "rm -rf build && tsc -w -p tsconfig.json",
-    "start": "node build/index.js --env-file .env.production",
-    "start:dev": "node --env-file .env --watch build/index.js"
+    "start": "node --env-file .env build/index.js",
+    "start:dev": "node --env-file .env --watch build/index.js",
+    "test": "tap --reporter=list"
   },
   "dependencies": {
     "@fastify/multipart": "^9.0.1",
     "@fastify/static": "^8.0.1",
+    "cloudinary": "^2.5.1",
     "fastify": "^5.0.0",
     "fastify-plugin": "^5.0.1",
     "module-alias": "^2.2.3",
@@ -23,11 +25,13 @@
   },
   "devDependencies": {
     "@types/node": "^22.7.4",
+    "tap": "^21.0.1",
     "typescript": "^5.6.2"
   },
   "_moduleAliases": {
-    "plugins": "build/plugins",
+    "lib": "build/lib",
     "models": "build/models",
+    "plugins": "build/plugins",
     "routes": "build/routes"
   }
 }

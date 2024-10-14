@@ -44,4 +44,5 @@ package-lock.json
 
 .vscode
 
-storage
+/storage
+.tap
