@@ -4,45 +4,45 @@ import Media from "models/media";
 
 const routes = async (fastify: FastifyInstance) => {
     fastify.get("/", async (request, reply) => {
-        const data = await fastify.repo.media.find();
+        const data: Array<Media> = await fastify.repo.media.find();
         return {
-            success: true,
+            error: null,
             data,
         };
     });
 
     fastify.post("/", async (request, reply) => {
         if (!request.isMultipart()) {
-            return { success: false, error: "Bad Request" };
+            return { data: null, error: "Bad Request" };
         }
 
         const data = await request.file();
         if (!data) {
-            return { success: false, error: `File doesn't exist` };
+            return { data: null, error: `File doesn't exist` };
         }
 
         const { file, error } = await fastify.storage.put(data);
         if (!file) {
             console.error(error);
-            return { success: false, error };
+            return { data: null, error };
         }
 
         try {
-            const media = new Media();
+            const media: Media = new Media();
             media.imagePath = file?.path;
-            media.filename = file?.filename
-            await fastify.repo.media.save(media);
-            return { success: true, error: null };
+            media.filename = file?.filename;
+            const result: Media = await fastify.repo.media.save(media);
+            return { data: result, error: null };
         } catch (error) {
             console.error(error);
-            return { success: false, error };
+            return { data: null, error };
         }
     });
 
     fastify.delete(
         "/:id",
         async (request: FastifyRequest<{ Params: { id: string } }>, reply) => {
-            const data = await fastify.repo.media.findOneBy({
+            const data: Media | null = await fastify.repo.media.findOneBy({
                 id: request.params.id,
             });
             if (!data) {
@@ -51,16 +51,16 @@ const routes = async (fastify: FastifyInstance) => {
 
             const { error } = await fastify.storage.remove(data.filename);
             if (error) {
-                return { success: false, error };
+                return { error };
             }
 
             try {
                 await fastify.repo.media.remove(data);
-                return { success: true, error: null };
+                return { error: null };
             } catch (error) {
-                return { success: false, error };
+                return { error };
             }
-        }
+        },
     );
 };
 
